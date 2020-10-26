@@ -24,7 +24,6 @@ public class ListViewModel extends ViewModel {
 
     private final MovieRepository repoRepository;
     private CompositeDisposable disposable;
-
     private final MutableLiveData<List<Movie>> movies = new MutableLiveData<>();
     private final MutableLiveData<Boolean> repoLoadError = new MutableLiveData<>();
     private final MutableLiveData<Boolean> loading = new MutableLiveData<>();
@@ -46,13 +45,15 @@ public class ListViewModel extends ViewModel {
     public ListViewModel(MovieRepository repoRepository) {
         this.repoRepository = repoRepository;
         disposable = new CompositeDisposable();
-        fetchRepos();
+        fetchMovies();
     }
 
-    private void fetchRepos() {
+    /**
+     * This function will fetch the movies and send it to the view
+     */
+    private void fetchMovies() {
         loading.setValue(true);
         arrmovie = new ArrayList<>();
-        Observable<MovieResponse> movieDBResponseObservabl =   repoRepository.getPopularMovies();
         disposable.add(repoRepository.getPopularMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -83,6 +84,9 @@ public class ListViewModel extends ViewModel {
 
     }
 
+    /**
+     * Here we dispose all the the subscription,to avoid memory leaks
+     */
     @Override
     protected void onCleared() {
         super.onCleared();

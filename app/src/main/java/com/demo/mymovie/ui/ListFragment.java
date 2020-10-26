@@ -1,6 +1,5 @@
 package com.demo.mymovie.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,8 +37,6 @@ public class ListFragment extends BaseFragment {
     ViewModelFactory viewModelFactory;
     private ListViewModel viewModel;
 
-    private ArrayList<Movie> movies=new ArrayList<>();
-
     private MovieListAdapter movieAdapter;
 
     @Override
@@ -56,29 +53,31 @@ public class ListFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         viewModel = ViewModelProviders.of(getBaseActivity(), viewModelFactory).get(ListViewModel.class);
         getPopularMovies();
-
     }
 
+    /**
+     * This will load the movie to the recyclerview
+     */
     private void getPopularMovies() {
         viewModel.getMovies().observe(this, movies -> {
-            if(movies != null) listView.setVisibility(View.VISIBLE);
+            if (movies != null) listView.setVisibility(View.VISIBLE);
             movieAdapter = new MovieListAdapter(getActivity(), (ArrayList<Movie>) movies);
             listView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             listView.setAdapter(movieAdapter);
             movieAdapter.notifyDataSetChanged();
         });
-
+        // To display error
         viewModel.getError().observe(this, isError -> {
-            if (isError != null) if(isError) {
+            if (isError != null) if (isError) {
                 errorTextView.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.GONE);
-                errorTextView.setText("An Error Occurred While Loading Data!");
-            }else {
+                errorTextView.setText(getResources().getString(R.string.error_msg));
+            } else {
                 errorTextView.setVisibility(View.GONE);
                 errorTextView.setText(null);
             }
         });
-
+       // To display progress loading
         viewModel.getLoading().observe(this, isLoading -> {
             if (isLoading != null) {
                 loadingView.setVisibility(isLoading ? View.VISIBLE : View.GONE);

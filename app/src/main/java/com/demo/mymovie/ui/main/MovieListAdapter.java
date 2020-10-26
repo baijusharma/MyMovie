@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.demo.mymovie.R;
 import com.demo.mymovie.data.model.Movie;
+import com.demo.mymovie.utils.Constant;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
         return new MovieViewHolder(view);
     }
 
@@ -38,7 +39,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
         holder.movieTitle.setText(movies.get(position).getTitle());
 
-        String posterPath="https://image.tmdb.org/t/p/w500"+ movies.get(position).getPosterPath();
+        String posterPath = Constant.IMG_LOAD_URL + movies.get(position).getPosterPath();
 
         Glide.with(context)
                 .load(posterPath)
@@ -51,7 +52,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         return movies.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         public TextView movieTitle;
         public ImageView movieImage;

@@ -9,5 +9,5 @@ import retrofit2.http.Query;
 public interface MovieService {
 
     @GET("movie/popular")
-    Observable<MovieResponse> getPopularMoviesWithRx(@Query("api_key") String apiKey);
+    Observable<MovieResponse> getPopularMovies(@Query("api_key") String apiKey);
 }

@@ -14,12 +14,11 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.demo.mymovie.utils.Constant.BASE_URL;
+
 
 @Module(includes = ViewModelModule.class)
 public class ApplicationModule {
-
-    private static String BASE_URL = "https://api.themoviedb.org/3/";
-
 
     @Singleton
     @Provides
@@ -37,7 +36,6 @@ public class ApplicationModule {
         return new Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-
                 .build();
     }
 

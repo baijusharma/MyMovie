@@ -17,7 +17,10 @@ public class MovieRepository {
         this.movieService = movieService;
     }
 
+    /**
+     * This function will return movie response
+     */
     public Observable<MovieResponse> getPopularMovies() {
-        return movieService.getPopularMoviesWithRx(api_key);
+        return movieService.getPopularMovies(api_key);
     }
 }
